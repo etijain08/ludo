@@ -22,7 +22,7 @@ export default function Home() {
 
   return (
     <main
-      className={`relative flex min-h-screen flex-col overflow-hidden transition-colors duration-700 ${
+      className={`relative flex min-h-screen flex-col transition-colors duration-700 ${
         isLight
           ? "bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-100"
           : "bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900"
