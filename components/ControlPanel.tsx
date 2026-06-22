@@ -17,6 +17,80 @@ interface ControlPanelProps {
   onRotationChange: (value: number) => void;
   onShake: () => void;
   onPulse: () => void;
+  cloudCount: number;
+  onCloudCountChange: (value: number) => void;
+  cloudSpeed: number;
+  onCloudSpeedChange: (value: number) => void;
+  fanSpeed: number;
+  onFanSpeedChange: (value: number) => void;
+}
+
+const MIN_CLOUDS = 0;
+const MAX_CLOUDS = 16;
+
+function Stepper({
+  icon,
+  label,
+  value,
+  min,
+  max,
+  onChange,
+  mode,
+}: {
+  icon: string;
+  label: string;
+  value: number;
+  min: number;
+  max: number;
+  onChange: (v: number) => void;
+  mode: Mode;
+}) {
+  const isLight = mode === "light";
+  return (
+    <div
+      className={`flex items-center justify-between rounded-2xl border-2 px-4 py-3 ${
+        isLight ? "border-orange-200 bg-white/60" : "border-indigo-700 bg-indigo-950/60"
+      }`}
+    >
+      <span
+        className={`flex items-center gap-2 text-sm font-bold uppercase tracking-wide ${
+          isLight ? "text-orange-900" : "text-indigo-100"
+        }`}
+      >
+        <span className="text-lg">{icon}</span>
+        {label}
+      </span>
+      <div className="flex items-center gap-3">
+        <button
+          type="button"
+          onClick={() => onChange(Math.max(min, value - 1))}
+          aria-label={`Decrease ${label}`}
+          className={`flex h-7 w-7 items-center justify-center rounded-full border-2 font-extrabold transition-all hover:brightness-110 active:translate-y-0.5 ${
+            isLight ? "border-orange-400 bg-orange-300 text-orange-950" : "border-indigo-400 bg-indigo-700 text-indigo-50"
+          }`}
+        >
+          −
+        </button>
+        <span
+          className={`w-5 text-center text-sm font-bold tabular-nums ${
+            isLight ? "text-orange-900" : "text-indigo-100"
+          }`}
+        >
+          {value}
+        </span>
+        <button
+          type="button"
+          onClick={() => onChange(Math.min(max, value + 1))}
+          aria-label={`Increase ${label}`}
+          className={`flex h-7 w-7 items-center justify-center rounded-full border-2 font-extrabold transition-all hover:brightness-110 active:translate-y-0.5 ${
+            isLight ? "border-orange-400 bg-orange-300 text-orange-950" : "border-indigo-400 bg-indigo-700 text-indigo-50"
+          }`}
+        >
+          +
+        </button>
+      </div>
+    </div>
+  );
 }
 
 function SliderRow({
@@ -85,6 +159,12 @@ export default function ControlPanel({
   onRotationChange,
   onShake,
   onPulse,
+  cloudCount,
+  onCloudCountChange,
+  cloudSpeed,
+  onCloudSpeedChange,
+  fanSpeed,
+  onFanSpeedChange,
 }: ControlPanelProps) {
   const isLight = mode === "light";
 
@@ -203,6 +283,45 @@ export default function ControlPanel({
             💗 Pulse
           </button>
         </div>
+
+        <div className={`my-2 h-[3px] rounded-full ${isLight ? "bg-orange-200" : "bg-indigo-800"}`} />
+
+        <h3
+          className={`text-center text-base font-extrabold uppercase tracking-widest ${
+            isLight ? "text-orange-900" : "text-indigo-100"
+          }`}
+          style={{ fontFamily: "var(--font-fredoka)" }}
+        >
+          ☁️ Scene Elements
+        </h3>
+
+        <Stepper
+          icon="☁️"
+          label="Cloud Count"
+          value={cloudCount}
+          min={MIN_CLOUDS}
+          max={MAX_CLOUDS}
+          onChange={onCloudCountChange}
+          mode={mode}
+        />
+        <SliderRow
+          icon="💨"
+          label="Cloud Speed"
+          value={cloudSpeed}
+          min={0}
+          max={100}
+          onChange={onCloudSpeedChange}
+          mode={mode}
+        />
+        <SliderRow
+          icon="🎡"
+          label="Fan Speed"
+          value={fanSpeed}
+          min={0}
+          max={100}
+          onChange={onFanSpeedChange}
+          mode={mode}
+        />
       </div>
     </motion.div>
   );

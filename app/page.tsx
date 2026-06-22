@@ -14,6 +14,9 @@ export default function Home() {
   const [rotationSpeed, setRotationSpeed] = useState(0);
   const [shakeTrigger, setShakeTrigger] = useState(0);
   const [pulseTrigger, setPulseTrigger] = useState(0);
+  const [cloudCount, setCloudCount] = useState(6);
+  const [cloudSpeed, setCloudSpeed] = useState(35);
+  const [fanSpeed, setFanSpeed] = useState(30);
 
   const isLight = mode === "light";
 
@@ -53,6 +56,9 @@ export default function Home() {
             rotationSpeed={rotationSpeed}
             shakeTrigger={shakeTrigger}
             pulseTrigger={pulseTrigger}
+            cloudCount={cloudCount}
+            cloudSpeed={cloudSpeed}
+            fanSpeed={fanSpeed}
           />
         </div>
 
@@ -70,6 +76,12 @@ export default function Home() {
           onRotationChange={setRotationSpeed}
           onShake={() => setShakeTrigger((t) => t + 1)}
           onPulse={() => setPulseTrigger((t) => t + 1)}
+          cloudCount={cloudCount}
+          onCloudCountChange={setCloudCount}
+          cloudSpeed={cloudSpeed}
+          onCloudSpeedChange={setCloudSpeed}
+          fanSpeed={fanSpeed}
+          onFanSpeedChange={setFanSpeed}
         />
       </div>
     </main>

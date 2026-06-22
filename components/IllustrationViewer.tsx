@@ -9,6 +9,8 @@ import {
   useSpring,
   useTransform,
 } from "framer-motion";
+import CloudField from "./CloudField";
+import Fan from "./Fan";
 
 export type Mode = "light" | "dark";
 
@@ -21,7 +23,12 @@ interface IllustrationViewerProps {
   rotationSpeed: number;
   shakeTrigger: number;
   pulseTrigger: number;
+  cloudCount: number;
+  cloudSpeed: number;
+  fanSpeed: number;
 }
+
+const FAN_BOX = { left: 66.96, top: 6.62, width: 9.06, height: 17.2 };
 
 function lerp(min: number, max: number, t: number) {
   return min + (max - min) * t;
@@ -38,6 +45,9 @@ export default function IllustrationViewer({
   rotationSpeed,
   shakeTrigger,
   pulseTrigger,
+  cloudCount,
+  cloudSpeed,
+  fanSpeed,
 }: IllustrationViewerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -191,6 +201,20 @@ export default function IllustrationViewer({
               className="object-contain drop-shadow-2xl"
             />
           </motion.div>
+
+          <CloudField mode={mode} count={cloudCount} speed={cloudSpeed} />
+
+          <div
+            className="absolute"
+            style={{
+              left: `${FAN_BOX.left}%`,
+              top: `${FAN_BOX.top}%`,
+              width: `${FAN_BOX.width}%`,
+              height: `${FAN_BOX.height}%`,
+            }}
+          >
+            <Fan mode={mode} speed={fanSpeed} />
+          </div>
         </motion.div>
       </motion.div>
     </div>
